@@ -8,6 +8,4 @@ We aim to answer the following two questions:
   <li> How to distill the ranking capabilities of ChatGPT to a smaller, specialized model? </li>
 </ol>
 
-<p align="center">
-<a href="https://github.com/sunnweiwei/RankGPT"><img src="assets/results.png” width=“50%”></a>
-</p>
+![Results on benchmarks](assets/results.png)
