@@ -36,7 +36,7 @@ We can re-rank the passages using ChatGPT with instructional permutation generat
 
 ```python
 from rank_gpt import permutation_pipeline
-new_item = permutation_pipeline(item, rank_start=0, rank_end=20, model_name='gpt-3.5-turbo', openai_key='Your OPENAI Key!')
+new_item = permutation_pipeline(item, rank_start=0, rank_end=3, model_name='gpt-3.5-turbo', openai_key='Your OPENAI Key!')
 print(new_item)
 ```
 
@@ -51,4 +51,15 @@ We get the following result, and show that after the re-ranking, the order of th
         {'content': 'Title: Masking the general population might attenuate COVID-19 outbreaks Content: The effect of masking the general population on a COVID-19 epidemic is estimated by computer simulation using two separate state-of-the-art web-based softwares, one of them calibrated for the SARS-CoV-2 virus. The questions addressed are these: 1. Can mask use by the general population limit the spread of SARS-CoV-2 in a country? 2. What types of masks exist, and how elaborate must a mask be to be effective against COVID-19? 3. Does the mask have to be applied early in an epidemic? 4. A brief general discussion of masks and some possible future research questions regarding masks and SARS-CoV-2. Results are as follows: (1) The results indicate that any type of mask, even simple home-made ones, may be effective. Masks use seems to have an effect in lowering new patients even the protective effect of each mask (here dubbed"one-mask protection") is'}
     ]
 }
+```
+
+## Sliding windows
+
+We introduce a sliding windows strategy that enables the permutation generation instructed LLMs to rank more passages than than their maximum token limit.
+The idea is to rank from back to front using a sliding window, re-ranking only the passages within the window at a time.
+Below is an example by re-ranking 3 passages with window size of 2 and step size of 1:
+```python
+from rank_gpt import sliding_windows
+new_item = sliding_windows(item, rank_start=0, rank_end=3, window_size=2, step=1, model_name='gpt-3.5-turbo', openai_key='Your OPENAI Key!')
+print(new_item)
 ```
