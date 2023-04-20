@@ -226,16 +226,11 @@ def sliding_windows(item=None, rank_start=0, rank_end=100, window_size=20, step=
     end_pos = rank_start
     start_pos = rank_end - window_size
     while start_pos >= rank_start:
-        start_pos = max(start_pos, cut_start)
-        print(f'## Rank {start_pos} - {end_pos}')
+        start_pos = max(start_pos, rank_start)
         item = permutation_pipeline(item, start_pos, end_pos, model_name=model_name, openai_key=openai_key)
-
         end_pos = end_pos - step
         start_pos = start_pos - step
-    self.write_file(f"{file}-final", rank=cur_rank)
-    print(f"File write on {file}-final")
-    if return_rank:
-        return cur_rank
+    return item
 
 
 def write_eval_file(rank_results, file):
