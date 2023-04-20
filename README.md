@@ -88,7 +88,7 @@ new_item = sliding_windows(item, rank_start=0, rank_end=3, window_size=2, step=1
 print(new_item)
 ```
 
-## Evaluation on TREC
+## Evaluation on Benchmarks
 We use [pyserini](https://github.com/castorini/pyserini) to retrieve 100 passages for each query and re-rank them using instructional permutation generation.
 
 ```python
@@ -115,8 +115,11 @@ write_eval_file(new_results, temp_file)
 EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', 'dl19-passage', temp_file])
 ```
 
+Run evaluation on all benchmarks
 
-
+```sh
+python run_evaluation.py
+```
 
 ## Cite
 
