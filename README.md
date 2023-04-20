@@ -1,6 +1,6 @@
 # RankGPT: Passage Re-Ranking with ChatGPT
 
-This project aims to exploring generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
+This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
 
 We aim to answer the following two questions: 
 <ol>
