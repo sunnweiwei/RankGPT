@@ -56,10 +56,6 @@ class SafeOpenai:
 
 def num_tokens_from_messages(messages, model="gpt-3.5-turbo-0301"):
     """Returns the number of tokens used by a list of messages."""
-    try:
-        encoding = tiktoken.get_encoding(model)
-    except:
-        encoding = tiktoken.get_encoding("cl100k_base")
     if model == "gpt-3.5-turbo":
         return num_tokens_from_messages(messages, model="gpt-3.5-turbo-0301")
     elif model == "gpt-4":
@@ -72,6 +68,11 @@ def num_tokens_from_messages(messages, model="gpt-3.5-turbo-0301"):
         tokens_per_name = 1
     else:
         tokens_per_message, tokens_per_name = 0, 0
+
+    try:
+        encoding = tiktoken.get_encoding(model)
+    except:
+        encoding = tiktoken.get_encoding("cl100k_base")
 
     num_tokens = 0
     if isinstance(messages, list):
@@ -158,7 +159,6 @@ def create_permutation_instruction(item=None, rank_start=0, rank_end=100, model_
             content = hit['content']
             content = content.replace('Title: Content: ', '')
             content = content.strip()
-
             content = ' '.join(content.split()[:int(max_length)])
             messages.append({'role': 'user', 'content': f"[{rank}] {content}"})
             messages.append({'role': 'assistant', 'content': f'Received passage [{rank}].'})
@@ -206,15 +206,17 @@ def receive_permutation(item, permutation, rank_start=0, rank_end=100):
     response = [ss for ss in response if ss in original_rank]
     response = response + [tt for tt in original_rank if tt not in response]
     for j, x in enumerate(response):
-        item['hits'][j + rank_start] = {
-            'content': cut_range[x]['content'], 'qid': cut_range[x]['qid'], 'docid': cut_range[x]['docid'],
-            'rank': cut_range[j]['rank'], 'score': cut_range[j]['score']}
+        item['hits'][j + rank_start] = copy.deepcopy(cut_range[x])
+        if 'rank' in item['hits'][j + rank_start]:
+            item['hits'][j + rank_start] = cut_range[j]['rank']
+        if 'score' in item['hits'][j + rank_start]:
+            item['hits'][j + rank_start] = cut_range[j]['score']
     return item
 
 
 def permutation_pipeline(item=None, rank_start=0, rank_end=100, model_name='gpt-3.5-turbo', openai_key=None):
     messages = create_permutation_instruction(item=item, rank_start=rank_start, rank_end=rank_end,
-                                              model_name='gpt-3.5-turbo')
+                                              model_name=model_name)
     permutation = run_llm(messages, openai_key=openai_key, model_name=model_name)
     item = receive_permutation(item, permutation, rank_start=rank_start, rank_end=rank_end)
     return item
@@ -259,7 +261,8 @@ def main():
 
     new_results = []
     for item in tqdm(rank_results):
-        new_item = permutation_pipeline(item, rank_start=0, rank_end=20, model_name='gpt-3.5-turbo', openai_key=openai_key)
+        new_item = permutation_pipeline(item, rank_start=0, rank_end=20, model_name='gpt-3.5-turbo',
+                                        openai_key=openai_key)
         new_results.append(new_item)
 
     temp_file = tempfile.NamedTemporaryFile(delete=False).name
