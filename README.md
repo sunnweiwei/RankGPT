@@ -1,5 +1,7 @@
 # RankGPT: LLMs as Re-Ranking Agent
 
+Code for paper "[Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agent](https://arxiv.org/abs/2304.09542)"
+
 This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
 
 We aim to answer the following two questions: 
@@ -11,11 +13,6 @@ We aim to answer the following two questions:
 To answer the first question, we introduce an **instructional permutation generation** appraoch to instruct LLMs to directly output the permutations of a group of passages.
 
 To answer the second question, we train a cross-encoder using 10K ChatGPT predicted permutations on MS MARCO.
-
-Below are the results (average nDCG@10) of our preliminary experiments on TREC, BEIR and Mr. TyDi.
-
-![Results on benchmarks](assets/results.png)
-
 
 ## New
 
@@ -121,13 +118,41 @@ Run evaluation on all benchmarks
 python run_evaluation.py
 ```
 
+Below are the results (average nDCG@10) of our preliminary experiments on TREC, BEIR and Mr. TyDi.
+
+![Results on benchmarks](assets/results.png)
 
 ## Training Specialized Models
 
-- Download the sampled 100K queies from https://drive.google.com/file/d/1G3MpQ5a4KgUS13JJZFE9aQvCbQfgSQzj/view?usp=share_link
-- Unzip the downloaded "marco-train-10k.jsonl.zip" and place it under `data/`
+### Download data and model
 
+|   File  | Note | Link |
+|:-------------------------------|:--------|:--------:|
+| marco-train-10k.jsonl | 10K queries sampled from MS MARCO | [Google drive](https://drive.google.com/file/d/1G3MpQ5a4KgUS13JJZFE9aQvCbQfgSQzj/view?usp=share_link) |
+| marco-train-10k-gpt3.5.json |  Permutations predicted by ChatGPT   | [Google drive](https://drive.google.com/file/d/1i7ckK7kN7BAqq5g7xAd0dLv3cTYYiclA/view?usp=share_link) |
+| deberta-10k-rank_net    |  Specialized Deberta model trained with RankNet loss | [Google drive](https://drive.google.com/file/d/1-KEpJ2KnJCqiJof4zNEA4m78tnwgxKhb/view?usp=share_link)  |
 
+### Train specialized model
+
+```bash
+python specialization.py \
+--model microsoft/deberta-v3-base \
+--loss rank_net \
+--data data/marco-train-10k.jsonl \
+--permutation marco-train-10k-gpt3.5.json \
+--save_path out/deberta-10k-rank_net \
+--do_train true \
+--do_eval true
+```
+
+### Evalaute the trained specialized model
+
+```bash
+python specialization.py \
+--model out/deberta-10k-rank_net \
+--do_train false \
+--do_eval true
+```
 
 
 ## Cite
