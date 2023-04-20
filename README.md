@@ -77,8 +77,11 @@ We get the following result:
 ## Sliding windows
 
 We introduce a sliding windows strategy that enables the permutation generation instructed LLMs to rank more passages than than their maximum token limit.
+
 The idea is to rank from back to front using a sliding window, re-ranking only the passages within the window at a time.
+
 Below is an example by re-ranking 3 passages with window size of 2 and step size of 1:
+
 ```python
 from rank_gpt import sliding_windows
 new_item = sliding_windows(item, rank_start=0, rank_end=3, window_size=2, step=1, model_name='gpt-3.5-turbo', openai_key='Your OPENAI Key!')
