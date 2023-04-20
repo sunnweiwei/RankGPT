@@ -1,4 +1,4 @@
-# RankGPT: Passage Re-Ranking with ChatGPT
+# RankGPT: LLMs as Re-Ranking Agent
 
 This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
 
@@ -83,4 +83,16 @@ Below is an example by re-ranking 3 passages with window size of 2 and step size
 from rank_gpt import sliding_windows
 new_item = sliding_windows(item, rank_start=0, rank_end=3, window_size=2, step=1, model_name='gpt-3.5-turbo', openai_key='Your OPENAI Key!')
 print(new_item)
+```
+
+
+## Cite
+
+```latex
+@article{sun2023chatgpt4search,
+  title={Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agent},
+  author={Sun Weiwei and Yan, Lingyong and Ma, Xinyu and Ren, Pengjie and Yin, Dawei Yin and Ren, Zhaochun}
+  journal={arXiv preprint arXiv:2304.09542},
+  year={2023}
+}
 ```
