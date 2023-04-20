@@ -40,7 +40,7 @@ new_item = permutation_pipeline(item, rank_start=0, rank_end=3, model_name='gpt-
 print(new_item)
 ```
 
-We get the following result, and show that after the re-ranking, the order of the second and third passages is swapped:
+We get the following result:
 
 ```python
 {
@@ -52,6 +52,23 @@ We get the following result, and show that after the re-ranking, the order of th
     ]
 }
 ```
+
+<details>
+<summary>Step by step example</summary>
+  
+  ```python
+  from rank_gpt import create_permutation_instruction, run_llm, receive_permutation
+  
+  # (1) Create permutation generation instruction
+  messages = create_permutation_instruction(item=item, rank_start=0, rank_end=3, model_name='gpt-3.5-turbo')
+  # (2) Get ChatGPT predicted permutation
+  permutation = run_llm(messages, openai_key="Your OPENAI Key!", model_name=model_name='gpt-3.5-turbo')
+  # (3) Use permutation to re-rank the passage
+  item = receive_permutation(item, permutation, rank_start=0, rank_end=3)
+  
+  ```
+  
+</details>
 
 ## Sliding windows
 
