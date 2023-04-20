@@ -219,7 +219,7 @@ def eval_on_benchmark(args, model=None, tokenizer=None):
         print(f'Now eval [{data}]')
         print('#' * 20)
 
-        searcher = LuceneSearcher.from_prebuilt_index(THE_INDEX[data])[:100]
+        searcher = LuceneSearcher.from_prebuilt_index(THE_INDEX[data])
         topics = get_topics(THE_TOPICS[data] if data != 'dl20' else 'dl20')
         qrels = get_qrels(THE_TOPICS[data])
         rank_results = run_retriever(topics, searcher, qrels, k=100)
