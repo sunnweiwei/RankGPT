@@ -158,7 +158,7 @@ accelerate launch --num_processes 4 specialization.py \
 --do_eval true
 ```
 
-### Evalaute the trained specialized model
+### Evaluate the trained specialized model on benchmarks
 
 ```bash
 python specialization.py \
