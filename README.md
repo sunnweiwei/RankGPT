@@ -1,5 +1,7 @@
 # RankGPT: LLMs as Re-Ranking Agent
 
+Code for paper "[Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agent](https://arxiv.org/abs/2304.09542)"
+
 This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
 
 We aim to answer the following two questions: 
