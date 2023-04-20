@@ -17,6 +17,10 @@ Below are the results (average nDCG@10) of our preliminary experiments on TREC, 
 ![Results on benchmarks](assets/results.png)
 
 
+## New
+
+- **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
+
 ## Quick example
 Below defines a query and three candidate passages:
 
