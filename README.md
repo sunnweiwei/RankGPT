@@ -8,7 +8,7 @@ We aim to answer the following two questions:
   <li> How to distill the ranking capabilities of ChatGPT to a smaller, specialized model? </li>
 </ol>
 
-To answer the first question, we introduce an instructional permutation generation appraoch to instruct LLMs to directly output the permutations of a group of passages.
+To answer the first question, we introduce an **instructional permutation generation** appraoch to instruct LLMs to directly output the permutations of a group of passages.
 
 To answer the second question, we train a cross-encoder using 10K ChatGPT predicted permutations on MS MARCO.
 
@@ -84,6 +84,35 @@ from rank_gpt import sliding_windows
 new_item = sliding_windows(item, rank_start=0, rank_end=3, window_size=2, step=1, model_name='gpt-3.5-turbo', openai_key='Your OPENAI Key!')
 print(new_item)
 ```
+
+## Evaluation on TREC
+We use [pyserini](https://github.com/castorini/pyserini) to retrieve 100 passages for each query and re-rank them using instructional permutation generation.
+
+```python
+from pyserini.search import LuceneSearcher, get_topics, get_qrels
+import tempfile
+openai_key = None  # Your openai key
+
+# Retrieve passages using pyserini BM25.
+searcher = LuceneSearcher.from_prebuilt_index('msmarco-v1-passage')
+topics = get_topics('dl19-passage')
+qrels = get_qrels('dl19-passage')
+rank_results = run_retriever(topics, searcher, qrels, k=100)
+
+# Run sliding window permutation generation
+new_results = []
+for item in tqdm(rank_results):
+    new_item = sliding_windows(item, rank_start=0, rank_end=100, window_size=20, step=10, model_name='gpt-3.5-turbo', openai_key=openai_key)
+    new_results.append(new_item)
+
+# Evaluate nDCG@10
+from trec_eval import EvalFunction
+temp_file = tempfile.NamedTemporaryFile(delete=False).name
+write_eval_file(new_results, temp_file)
+EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', 'dl19-passage', temp_file])
+```
+
+
 
 
 ## Cite
