@@ -145,7 +145,7 @@ python specialization.py \
 --do_eval true
 ```
 
-or run with multi-gpus, using [accelerate](https://github.com/huggingface/accelerate):
+or run on multi-gpus, using [accelerate](https://github.com/huggingface/accelerate):
 
 ```bash
 accelerate launch --num_processes 4 specialization.py \
