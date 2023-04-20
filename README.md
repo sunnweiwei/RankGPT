@@ -120,7 +120,7 @@ python run_evaluation.py
 
 Below are the results (average nDCG@10) of our preliminary experiments on TREC, BEIR and Mr. TyDi.
 
-![Results on benchmarks](assets/results.png)
+![Results on benchmarks](assets/results.jpg)
 
 ## Training Specialized Models
 
