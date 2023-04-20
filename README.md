@@ -145,6 +145,19 @@ python specialization.py \
 --do_eval true
 ```
 
+or run with multi-gpus, using [accelerate](https://github.com/huggingface/accelerate):
+
+```bash
+accelerate launch --num_processes 4 specialization.py \
+--model microsoft/deberta-v3-base \
+--loss rank_net \
+--data data/marco-train-10k.jsonl \
+--permutation marco-train-10k-gpt3.5.json \
+--save_path out/deberta-10k-rank_net \
+--do_train true \
+--do_eval true
+```
+
 ### Evalaute the trained specialized model
 
 ```bash
