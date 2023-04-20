@@ -12,11 +12,6 @@ To answer the first question, we introduce an **instructional permutation genera
 
 To answer the second question, we train a cross-encoder using 10K ChatGPT predicted permutations on MS MARCO.
 
-Below are the results (average nDCG@10) of our preliminary experiments on TREC, BEIR and Mr. TyDi.
-
-![Results on benchmarks](assets/results.png)
-
-
 ## New
 
 - **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
@@ -121,6 +116,9 @@ Run evaluation on all benchmarks
 python run_evaluation.py
 ```
 
+Below are the results (average nDCG@10) of our preliminary experiments on TREC, BEIR and Mr. TyDi.
+
+![Results on benchmarks](assets/results.png)
 
 ## Training Specialized Models
 
