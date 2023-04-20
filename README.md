@@ -88,6 +88,8 @@ print(new_item)
 ## Evaluation on Benchmarks
 We use [pyserini](https://github.com/castorini/pyserini) to retrieve 100 passages for each query and re-rank them using instructional permutation generation.
 
+Example of evaluation on TREC-DL19:
+
 ```python
 from pyserini.search import LuceneSearcher, get_topics, get_qrels
 import tempfile
