@@ -121,6 +121,15 @@ Run evaluation on all benchmarks
 python run_evaluation.py
 ```
 
+
+## Training Specialized Models
+
+- Download the sampled 100K queies from https://drive.google.com/file/d/1G3MpQ5a4KgUS13JJZFE9aQvCbQfgSQzj/view?usp=share_link
+- Unzip the downloaded "marco-train-10k.jsonl.zip" and place it under `data/`
+
+
+
+
 ## Cite
 
 ```latex
