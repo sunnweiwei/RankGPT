@@ -174,7 +174,6 @@ def create_permutation_instruction(item=None, rank_start=0, rank_end=100, model_
 def run_llm(messages, openai_key=None, model_name="gpt-3.5-turbo"):
     agent = SafeOpenai(openai_key)
     response = agent.chat(model=model_name, messages=messages, temperature=0, return_text=True)
-    print(response)
     return response
 
 
