@@ -108,7 +108,7 @@ def train(args):
     accelerator = Accelerator(gradient_accumulation_steps=8)
     neg_num = 19
 
-    data = [json.loads(line) for line in open('data/msmarco-passage/sampled-bm25-train.jsonl')][:5000]
+    data = [json.loads(line) for line in open('data/msmarco-passage/sampled-bm25-train.jsonl')]
     # data = [json.loads(line) for line in open('data/msmarco-passage/bm25-train.jsonl')]
     print(len(data))
 
