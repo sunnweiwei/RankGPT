@@ -48,7 +48,7 @@ class SafeOpenai:
                     return 'ERROR::reduce_length'
                 self.key_id = (self.key_id + 1) % len(self.key)
                 openai.api_key = self.key[self.key_id]
-                time.sleep(0.5)
+                time.sleep(0.1)
         if return_text:
             completion = completion['choices'][0]['text']
         return completion
@@ -89,7 +89,7 @@ def num_tokens_from_messages(messages, model="gpt-3.5-turbo-0301"):
 
 
 def max_tokens(model):
-    if model == 'gpt-4':
+    if 'gpt-4' in model:
         return 8192
     else:
         return 4096
@@ -159,6 +159,7 @@ def create_permutation_instruction(item=None, rank_start=0, rank_end=100, model_
             content = hit['content']
             content = content.replace('Title: Content: ', '')
             content = content.strip()
+            # For Japanese should cut by character: content = content[:int(max_length)]
             content = ' '.join(content.split()[:int(max_length)])
             messages.append({'role': 'user', 'content': f"[{rank}] {content}"})
             messages.append({'role': 'assistant', 'content': f'Received passage [{rank}].'})
