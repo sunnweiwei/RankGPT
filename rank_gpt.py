@@ -207,9 +207,9 @@ def receive_permutation(item, permutation, rank_start=0, rank_end=100):
     for j, x in enumerate(response):
         item['hits'][j + rank_start] = copy.deepcopy(cut_range[x])
         if 'rank' in item['hits'][j + rank_start]:
-            item['hits'][j + rank_start] = cut_range[j]['rank']
+            item['hits'][j + rank_start]['rank'] = cut_range[j]['rank']
         if 'score' in item['hits'][j + rank_start]:
-            item['hits'][j + rank_start] = cut_range[j]['score']
+            item['hits'][j + rank_start]['score'] = cut_range[j]['score']
     return item
 
 
