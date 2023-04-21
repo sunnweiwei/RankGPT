@@ -108,9 +108,8 @@ def train(args):
     accelerator = Accelerator(gradient_accumulation_steps=8)
     neg_num = 19
 
-    data = [json.loads(line) for line in open('data/msmarco-passage/sampled-bm25-train.jsonl')]
-    # data = [json.loads(line) for line in open('data/msmarco-passage/bm25-train.jsonl')]
-    print(len(data))
+    data = [json.loads(line) for line in open(data_path)]
+    print('Num of training samples', len(data))
 
     # Create cross encoder model
     config = AutoConfig.from_pretrained(model_name)
