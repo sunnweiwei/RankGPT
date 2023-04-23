@@ -92,6 +92,7 @@ Example of evaluation on TREC-DL19:
 
 ```python
 from pyserini.search import LuceneSearcher, get_topics, get_qrels
+from rank_gpt import run_retriever, sliding_windows
 import tempfile
 openai_key = None  # Your openai key
 
