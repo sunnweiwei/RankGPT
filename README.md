@@ -15,7 +15,7 @@ To answer the first question, we introduce an **instructional permutation genera
 To answer the second question, we train a cross-encoder using 10K ChatGPT predicted permutations on MS MARCO.
 
 ## News
-- **[2023.04.23]** Sharing 100K permutations predicted by ChatGPT at [here](#download-data-and-model).
+- **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set at [here](#download-data-and-model).
 - **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
 
 ## Quick example
