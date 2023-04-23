@@ -15,7 +15,7 @@ To answer the first question, we introduce an **instructional permutation genera
 To answer the second question, we train a cross-encoder using 10K ChatGPT predicted permutations on MS MARCO.
 
 ## News
-
+- **[2023.04.23]** Sharing 100K permutations predicted by ChatGPT at [here](#download-data-and-model).
 - **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
 
 ## Quick example
@@ -134,6 +134,8 @@ Below are the results (average nDCG@10) of our preliminary experiments on [TREC]
 | marco-train-10k.jsonl | 10K queries sampled from MS MARCO | [Google drive](https://drive.google.com/file/d/1G3MpQ5a4KgUS13JJZFE9aQvCbQfgSQzj/view?usp=share_link) |
 | marco-train-10k-gpt3.5.json |  Permutations predicted by ChatGPT   | [Google drive](https://drive.google.com/file/d/1i7ckK7kN7BAqq5g7xAd0dLv3cTYYiclA/view?usp=share_link) |
 | deberta-10k-rank_net    |  Specialized Deberta model trained with RankNet loss | [Google drive](https://drive.google.com/file/d/1-KEpJ2KnJCqiJof4zNEA4m78tnwgxKhb/view?usp=share_link)  |
+|marco-train-100k.jsonl | 100K queries from MS MARCO | [Google drive](https://drive.google.com/file/d/1OgF4rj89FWSr7pl1c7Hu4x0oQYIMwhik/view?usp=share_link) |
+| marco-train-100k-gpt3.5.jsonl | Permutations by ChatGPT of the 100K queries | [Google drive](https://drive.google.com/file/d/1z327WOKr70rC4UfOlQVBQnuLxChi_uPs/view?usp=share_link) |
 
 ### Train specialized model
 
