@@ -15,7 +15,7 @@ To answer the first question, we introduce an **instructional permutation genera
 To answer the second question, we train a cross-encoder using 10K ChatGPT predicted permutations on MS MARCO.
 
 ## News
-- **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set at [here](#download-data-and-model).
+- **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set [here](#download-data-and-model).
 - **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
 
 ## Quick example
@@ -73,7 +73,7 @@ We get the following result:
 
 ## Sliding windows
 
-We introduce a sliding windows strategy that enables the permutation generation instructed LLMs to rank more passages than than their maximum token limit.
+We introduce a sliding window strategy for the instructional permutation generation, that enables LLMs to rank more passages than their maximum token limit.
 
 The idea is to rank from back to front using a sliding window, re-ranking only the passages within the window at a time.
 
