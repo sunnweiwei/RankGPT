@@ -137,7 +137,7 @@ Below are the results (average nDCG@10) of our preliminary experiments on [TREC]
 |marco-train-100k.jsonl | 100K queries from MS MARCO | [Google drive](https://drive.google.com/file/d/1OgF4rj89FWSr7pl1c7Hu4x0oQYIMwhik/view?usp=share_link) |
 | marco-train-100k-gpt3.5.json | Permutations by ChatGPT of the 100K queries | [Google drive](https://drive.google.com/file/d/1z327WOKr70rC4UfOlQVBQnuLxChi_uPs/view?usp=share_link) |
 
-### Train specialized model
+### Distill LLM to a small specialized model
 
 ```bash
 python specialization.py \
@@ -163,7 +163,7 @@ accelerate launch --num_processes 4 specialization.py \
 --do_eval true
 ```
 
-### Evaluate the trained specialized model on benchmarks
+### Evaluate the distilled model on benchmarks
 
 ```bash
 python specialization.py \
