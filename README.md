@@ -178,7 +178,7 @@ python specialization.py \
 ```latex
 @article{sun2023chatgpt4search,
   title={Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agent},
-  author={Sun Weiwei and Yan, Lingyong and Ma, Xinyu and Ren, Pengjie and Yin, Dawei and Ren, Zhaochun}
+  author={Sun, Weiwei and Yan, Lingyong and Ma, Xinyu and Ren, Pengjie and Yin, Dawei and Ren, Zhaochun}
   journal={arXiv preprint arXiv:2304.09542},
   year={2023}
 }
