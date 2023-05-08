@@ -96,10 +96,11 @@ for data in ['mrtydi-ar', 'mrtydi-bn', 'mrtydi-fi', 'mrtydi-id', 'mrtydi-ja', 'm
     print('#' * 20)
 
     # Retrieve passages using pyserini BM25.
-    searcher = LuceneSearcher.from_prebuilt_index(THE_INDEX[data])[:100]
+    searcher = LuceneSearcher.from_prebuilt_index(THE_INDEX[data])
     topics = get_topics(THE_TOPICS[data] if data != 'dl20' else 'dl20')
     qrels = get_qrels(THE_TOPICS[data])
     rank_results = run_retriever(topics, searcher, qrels, k=100)
+    rank_results = rank_results[:100]
 
     # Run sliding window permutation generation
     new_results = []
