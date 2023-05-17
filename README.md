@@ -176,10 +176,11 @@ python specialization.py \
 ## Cite
 
 ```latex
-@article{sun2023chatgpt4search,
+@article{Sun2023IsCG,
   title={Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agent},
-  author={Sun, Weiwei and Yan, Lingyong and Ma, Xinyu and Ren, Pengjie and Yin, Dawei and Ren, Zhaochun}
-  journal={arXiv preprint arXiv:2304.09542},
-  year={2023}
+  author={Weiwei Sun and Lingyong Yan and Xinyu Ma and Pengjie Ren and Dawei Yin and Zhaochun Ren},
+  journal={ArXiv},
+  year={2023},
+  volume={abs/2304.09542}
 }
 ```
