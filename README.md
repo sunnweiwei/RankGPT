@@ -4,16 +4,6 @@ Code for paper "[Is ChatGPT Good at Search? Investigating Large Language Models 
 
 This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
 
-We aim to answer the following two questions: 
-<ol>
-  <li> How does ChatGPT perform on passage re-ranking tasks? </li>
-  <li> How to distill the ranking capabilities of ChatGPT to a smaller, specialized model? </li>
-</ol>
-
-To answer the first question, we introduce an **instructional permutation generation** appraoch to instruct LLMs to directly output the permutations of a group of passages.
-
-To answer the second question, we train a cross-encoder using 10K ChatGPT predicted permutations on MS MARCO.
-
 ## News
 - **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set [here](#download-data-and-model).
 - **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
