@@ -61,8 +61,9 @@ from rank_gpt import run_retriever, sliding_windows, write_eval_file
 from pyserini.search import LuceneSearcher, get_topics, get_qrels
 from tqdm import tqdm
 import tempfile
+import os
 
-openai_key = None  # Your openai key
+openai_key = os.environ.get("OPENAI_API_KEY", None)
 
 for data in ['dl19', 'dl20', 'covid', 'nfc', 'touche', 'dbpedia', 'scifact', 'signal', 'news', 'robust04']:
     print('#' * 20)
