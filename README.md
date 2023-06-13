@@ -61,6 +61,45 @@ We get the following result:
   
 </details>
 
+## Installation
+
+The installation process assumes that you use Python 3.9, or that you install a `conda` environment with Python 3.9.
+
+```shell
+# Create a conda environment (optional)
+conda create -n rankgpt python=3.9
+conda activate rankgpt
+```
+
+Install Java 11 to use `pyserini`
+
+```shell
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt install openjdk-11-jdk
+```
+
+Install `faiss` for GPU or CPU
+
+```shell
+# Install with GPU support
+conda install faiss-gpu pytorch pytorch-cuda -c pytorch -c nvidia
+# Or, if just CPU
+conda install -c pytorch faiss-cpu
+```
+
+Install other dependencies
+
+```shell
+pip install -r requirements.txt
+```
+
+Finally, add your OpenAI API key as envionment variable
+
+```shell
+export OPENAI_KEY=YOUR_OPENAI_KEY
+```
+
 ## Sliding windows
 
 We introduce a sliding window strategy for the instructional permutation generation, that enables LLMs to rank more passages than their maximum token limit.
