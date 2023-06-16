@@ -12,8 +12,8 @@ THE_INDEX = {
     'quora': 'beir-v1.0.0-quora.flat',
     'dbpedia': 'beir-v1.0.0-dbpedia-entity.flat',
     'fever': 'beir-v1.0.0-fever-flat',
-    'robust04': 'beir-v1.0.0-robust04-flat',
-    'signal': 'beir-v1.0.0-signal1m-flat',
+    'robust04': 'beir-v1.0.0-robust04.flat',
+    'signal': 'beir-v1.0.0-signal1m.flat',
 
     'mrtydi-ar': 'mrtydi-v1.1-arabic',
     'mrtydi-bn': 'mrtydi-v1.1-bengali',
@@ -62,33 +62,53 @@ from pyserini.search import LuceneSearcher, get_topics, get_qrels
 from tqdm import tqdm
 import tempfile
 import os
+import json
+import shutil
 
 openai_key = os.environ.get("OPENAI_API_KEY", None)
 
-for data in ['dl19', 'dl20', 'covid', 'nfc', 'touche', 'dbpedia', 'scifact', 'signal', 'news', 'robust04']:
+# for data in ['dl19', 'dl20', 'covid', 'nfc', 'touche', 'dbpedia', 'scifact', 'signal', 'news', 'robust04']:
+for data in ['signal', 'news', 'robust04']:
+
     print('#' * 20)
     print(f'Evaluation on {data}')
     print('#' * 20)
 
     # Retrieve passages using pyserini BM25.
-    searcher = LuceneSearcher.from_prebuilt_index(THE_INDEX[data])
-    topics = get_topics(THE_TOPICS[data] if data != 'dl20' else 'dl20')
-    qrels = get_qrels(THE_TOPICS[data])
-    rank_results = run_retriever(topics, searcher, qrels, k=100)
+    # Get a specific doc: 
+    # * searcher.num_docs
+    # * json.loads(searcher.object.reader.document(4).fields[1].fieldsData) -> {"id": "1", "contents": ""}
+    try:
+        searcher = LuceneSearcher.from_prebuilt_index(THE_INDEX[data])
+        topics = get_topics(THE_TOPICS[data] if data != 'dl20' else 'dl20')
+        qrels = get_qrels(THE_TOPICS[data])
+        rank_results = run_retriever(topics, searcher, qrels, k=100)
 
-    # Run sliding window permutation generation
-    new_results = []
-    for item in tqdm(rank_results):
-        new_item = sliding_windows(item, rank_start=0, rank_end=100, window_size=20, step=10,
-                                   model_name='gpt-3.5-turbo', openai_key=openai_key)
-        new_results.append(new_item)
+        # Store JSON in rank_results to a file
+        with open(f'rank_results_{data}.json', 'w') as f:
+            json.dump(rank_results, f, indent=2)
+        # Store the QRELS of the dataset
+        with open(f'qrels_{data}.json', 'w') as f:
+            json.dump(qrels, f, indent=2)
+    except:
+        print(f'Failed to retrieve passages for {data}')
+    # # Run sliding window permutation generation
+    # new_results = []
+    # for item in tqdm(rank_results):
+    #     new_item = sliding_windows(item, rank_start=0, rank_end=10, window_size=20, step=10,
+    #                                model_name='gpt-3.5-turbo', openai_key=openai_key)
+    #     new_results.append(new_item)
 
-    # Evaluate nDCG@10
-    from trec_eval import EvalFunction
+    # # Evaluate nDCG@10
+    # from trec_eval import EvalFunction
 
-    temp_file = tempfile.NamedTemporaryFile(delete=False).name
-    write_eval_file(new_results, temp_file)
-    EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', THE_TOPICS[data], temp_file])
+    # # Create an empty text file to write results, and pass the name to eval
+    # output_file = tempfile.NamedTemporaryFile(delete=False).name
+    # write_eval_file(new_results, output_file)
+    # EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', THE_TOPICS[data], output_file])
+    # # Rename the output file to a better name
+    # shutil.move(output_file, f'eval_{data}.txt')
+
 
 
 for data in ['mrtydi-ar', 'mrtydi-bn', 'mrtydi-fi', 'mrtydi-id', 'mrtydi-ja', 'mrtydi-ko', 'mrtydi-ru', 'mrtydi-sw', 'mrtydi-te', 'mrtydi-th']:
@@ -97,23 +117,34 @@ for data in ['mrtydi-ar', 'mrtydi-bn', 'mrtydi-fi', 'mrtydi-id', 'mrtydi-ja', 'm
     print('#' * 20)
 
     # Retrieve passages using pyserini BM25.
-    searcher = LuceneSearcher.from_prebuilt_index(THE_INDEX[data])
-    topics = get_topics(THE_TOPICS[data] if data != 'dl20' else 'dl20')
-    qrels = get_qrels(THE_TOPICS[data])
-    rank_results = run_retriever(topics, searcher, qrels, k=100)
-    rank_results = rank_results[:100]
+    try:
+        searcher = LuceneSearcher.from_prebuilt_index(THE_INDEX[data])
+        topics = get_topics(THE_TOPICS[data] if data != 'dl20' else 'dl20')
+        qrels = get_qrels(THE_TOPICS[data])
+        rank_results = run_retriever(topics, searcher, qrels, k=100)
+        rank_results = rank_results[:100]
 
-    # Run sliding window permutation generation
-    new_results = []
-    for item in tqdm(rank_results):
-        new_item = sliding_windows(item, rank_start=0, rank_end=100, window_size=20, step=10,
-                                   model_name='gpt-3.5-turbo', openai_key=openai_key)
-        new_results.append(new_item)
+        # Store JSON in rank_results to a file
+        with open(f'rank_results_{data}.json', 'w') as f:
+            json.dump(rank_results, f, indent=2)
+        # Store the QRELS of the dataset
+        with open(f'qrels_{data}.json', 'w') as f:
+            json.dump(qrels, f, indent=2)
+    except:
+        print(f'Failed to retrieve passages for {data}')
 
-    # Evaluate nDCG@10
-    from trec_eval import EvalFunction
+    # # Run sliding window permutation generation
+    # new_results = []
+    # for item in tqdm(rank_results):
+    #     new_item = sliding_windows(item, rank_start=0, rank_end=100, window_size=20, step=10,
+    #                                model_name='gpt-3.5-turbo', openai_key=openai_key)
+    #     new_results.append(new_item)
 
-    temp_file = tempfile.NamedTemporaryFile(delete=False).name
-    write_eval_file(new_results, temp_file)
-    EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', THE_TOPICS[data], temp_file])
+    # # Evaluate nDCG@10
+    # from trec_eval import EvalFunction
 
+    # temp_file = tempfile.NamedTemporaryFile(delete=False).name
+    # write_eval_file(new_results, temp_file)
+    # EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', THE_TOPICS[data], temp_file])
+    #     # Rename the output file to a better name
+    # shutil.move(output_file, f'eval_{data}.txt')
