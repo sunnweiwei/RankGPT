@@ -5,6 +5,7 @@ Code for paper "[Is ChatGPT Good at Search? Investigating Large Language Models 
 This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
 
 ## News
+- **[2023.07.11]** Release a new test set NovelEval with the novel search questions and passages that have not been contaminated by the latest LLMs (e.g., GPT-4). See [NovelEval](https://github.com/sunnweiwei/RankGPT/tree/main/NovelEval) for details.
 - **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set [here](#download-data-and-model).
 - **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
 
