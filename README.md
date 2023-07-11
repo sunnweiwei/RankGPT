@@ -114,7 +114,7 @@ python run_evaluation.py
 
 Below are the results (average nDCG@10) of our preliminary experiments on [TREC](https://microsoft.github.io/msmarco/TREC-Deep-Learning-2020.html), [BEIR](https://github.com/beir-cellar/beir) and [Mr. TyDi](https://github.com/castorini/mr.tydi).
 
-![Results on benchmarks](assets/results2.jpg)
+![Results on benchmarks](assets/benchmark-results.png)
 
 ## Installation
 
@@ -202,6 +202,9 @@ python specialization.py \
 --do_eval true
 ```
 
+The following figure show the results of distilled specialized model with different model size and number of training queires.
+
+![Specialization results.](assets/specialization-results.png)
 
 ## Cite
 
