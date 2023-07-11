@@ -4,18 +4,8 @@ Code for paper "[Is ChatGPT Good at Search? Investigating Large Language Models 
 
 This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
 
-We aim to answer the following two questions: 
-<ol>
-  <li> How does ChatGPT perform on passage re-ranking tasks? </li>
-  <li> How to distill the ranking capabilities of ChatGPT to a smaller, specialized model? </li>
-</ol>
-
-To answer the first question, we introduce an **instructional permutation generation** appraoch to instruct LLMs to directly output the permutations of a group of passages.
-
-To answer the second question, we train a cross-encoder using 10K ChatGPT predicted permutations on MS MARCO.
-
 ## News
-- **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set at [here](#download-data-and-model).
+- **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set [here](#download-data-and-model).
 - **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
 
 ## Quick example
@@ -71,9 +61,9 @@ We get the following result:
   
 </details>
 
-## Sliding windows
+## Sliding window strategy
 
-We introduce a sliding windows strategy that enables the permutation generation instructed LLMs to rank more passages than than their maximum token limit.
+We introduce a sliding window strategy for the instructional permutation generation, that enables LLMs to rank more passages than their maximum token limit.
 
 The idea is to rank from back to front using a sliding window, re-ranking only the passages within the window at a time.
 
@@ -125,6 +115,45 @@ Below are the results (average nDCG@10) of our preliminary experiments on [TREC]
 
 ![Results on benchmarks](assets/results2.jpg)
 
+## Installation
+
+The installation process assumes that you use Python 3.9, or that you install a `conda` environment with Python 3.9.
+
+```shell
+# Create a conda environment (optional)
+conda create -n rankgpt python=3.9
+conda activate rankgpt
+```
+
+Install Java 11 to use `pyserini`
+
+```shell
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt install openjdk-11-jdk
+```
+
+Install `faiss` for GPU or CPU
+
+```shell
+# Install with GPU support
+conda install faiss-gpu pytorch pytorch-cuda -c pytorch -c nvidia
+# Or, if just CPU
+conda install -c pytorch faiss-cpu
+```
+
+Install other dependencies
+
+```shell
+pip install -r requirements.txt
+```
+
+Finally, add your OpenAI API key as envionment variable
+
+```shell
+export OPENAI_KEY=YOUR_OPENAI_KEY
+```
+
 ## Training Specialized Models
 
 ### Download data and model
@@ -137,7 +166,7 @@ Below are the results (average nDCG@10) of our preliminary experiments on [TREC]
 |marco-train-100k.jsonl | 100K queries from MS MARCO | [Google drive](https://drive.google.com/file/d/1OgF4rj89FWSr7pl1c7Hu4x0oQYIMwhik/view?usp=share_link) |
 | marco-train-100k-gpt3.5.json | Permutations by ChatGPT of the 100K queries | [Google drive](https://drive.google.com/file/d/1z327WOKr70rC4UfOlQVBQnuLxChi_uPs/view?usp=share_link) |
 
-### Train specialized model
+### Distill LLM to a small specialized model
 
 ```bash
 python specialization.py \
@@ -163,7 +192,7 @@ accelerate launch --num_processes 4 specialization.py \
 --do_eval true
 ```
 
-### Evaluate the trained specialized model on benchmarks
+### Evaluate the distilled model on benchmarks
 
 ```bash
 python specialization.py \
@@ -176,10 +205,11 @@ python specialization.py \
 ## Cite
 
 ```latex
-@article{sun2023chatgpt4search,
+@article{Sun2023IsCG,
   title={Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agent},
-  author={Sun Weiwei and Yan, Lingyong and Ma, Xinyu and Ren, Pengjie and Yin, Dawei and Ren, Zhaochun}
-  journal={arXiv preprint arXiv:2304.09542},
-  year={2023}
+  author={Weiwei Sun and Lingyong Yan and Xinyu Ma and Pengjie Ren and Dawei Yin and Zhaochun Ren},
+  journal={ArXiv},
+  year={2023},
+  volume={abs/2304.09542}
 }
 ```
