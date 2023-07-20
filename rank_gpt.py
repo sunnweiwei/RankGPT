@@ -225,7 +225,7 @@ def permutation_pipeline(item=None, rank_start=0, rank_end=100, model_name='gpt-
 def sliding_windows(item=None, rank_start=0, rank_end=100, window_size=20, step=10, model_name='gpt-3.5-turbo',
                     openai_key=None):
     item = copy.deepcopy(item)
-    end_pos = rank_start
+    end_pos = rank_end
     start_pos = rank_end - window_size
     while start_pos >= rank_start:
         start_pos = max(start_pos, rank_start)
