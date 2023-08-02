@@ -108,9 +108,6 @@ def train(args):
     accelerator = Accelerator(gradient_accumulation_steps=8)
     neg_num = 19
 
-    data = [json.loads(line) for line in open(data_path)]
-    print('Num of training samples', len(data))
-
     # Create cross encoder model
     config = AutoConfig.from_pretrained(model_name)
     config.num_labels = 1
