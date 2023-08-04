@@ -4,7 +4,10 @@ import time
 import openai
 import json
 import tiktoken
-from litellm import completion
+try:
+    from litellm import completion
+except:
+    completion = openai.ChatCompletion.create
 
 class SafeOpenai:
     def __init__(self, model=None, keys=None, start_id=None, proxy=None):
