@@ -4,16 +4,9 @@ Code for paper "[Is ChatGPT Good at Search? Investigating Large Language Models 
 
 This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relevance ranking in Information Retrieval (IR).
 
-## Update
-🚀 This project now supports Azure, Claude, Cohere, Llama2 via [LiteLLM](https://github.com/BerriAI/litellm)
-⏳ PaLM support is [coming soon](https://github.com/BerriAI/litellm/pull/36)
-To get a list of available models run: 
-```python
-import litellm 
-print(litellm.model_list)
-```
 
 ## News
+- **[2023.08.05]** Now support Azure, Claude, Cohere, Llama2 via [LiteLLM](https://github.com/BerriAI/litellm)!
 - **[2023.07.11]** Release a new test set NovelEval with the novel search questions and passages that have not been contaminated by the latest LLMs (e.g., GPT-4). See [NovelEval](https://github.com/sunnweiwei/RankGPT/tree/main/NovelEval) for details.
 - **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set [here](#download-data-and-model).
 - **[2023.04.19]** Our paper is now available at https://arxiv.org/abs/2304.09542
