@@ -4,10 +4,10 @@ import time
 import openai
 import json
 import tiktoken
-
+from litellm import completion
 
 class SafeOpenai:
-    def __init__(self, keys=None, start_id=None, proxy=None):
+    def __init__(self, model=None, keys=None, start_id=None, proxy=None):
         if isinstance(keys, str):
             keys = [keys]
         if keys is None:
@@ -18,11 +18,16 @@ class SafeOpenai:
         self.key_id = self.key_id % len(self.key)
         openai.proxy = proxy
         openai.api_key = self.key[self.key_id % len(self.key)]
+        self.api_key = self.key[self.key_id % len(self.key)]
 
     def chat(self, *args, return_text=False, reduce_length=False, **kwargs):
         while True:
             try:
-                completion = openai.ChatCompletion.create(*args, **kwargs, timeout=30)
+                model = args[0] if len(args) > 0 else kwargs["model"]
+                if "gpt" in model:
+                    completion = openai.ChatCompletion.create(*args, **kwargs, timeout=30)
+                elif model in litellm.model_list:
+                    completion = completion(*args, **kwargs, api_key=self.api_key, force_timeout=30)
                 break
             except Exception as e:
                 print(str(e))
@@ -214,22 +219,22 @@ def receive_permutation(item, permutation, rank_start=0, rank_end=100):
     return item
 
 
-def permutation_pipeline(item=None, rank_start=0, rank_end=100, model_name='gpt-3.5-turbo', openai_key=None):
+def permutation_pipeline(item=None, rank_start=0, rank_end=100, model_name='gpt-3.5-turbo', api_key=None): # change to `api_key` from `openai_key` to make it more generic
     messages = create_permutation_instruction(item=item, rank_start=rank_start, rank_end=rank_end,
-                                              model_name=model_name)
-    permutation = run_llm(messages, openai_key=openai_key, model_name=model_name)
+                                              model_name=model_name) # chan
+    permutation = run_llm(messages, openai_key=api_key, model_name=model_name)
     item = receive_permutation(item, permutation, rank_start=rank_start, rank_end=rank_end)
     return item
 
 
 def sliding_windows(item=None, rank_start=0, rank_end=100, window_size=20, step=10, model_name='gpt-3.5-turbo',
-                    openai_key=None):
+                    api_key=None): # change to `api_key` from `openai_key` to make it more generic
     item = copy.deepcopy(item)
     end_pos = rank_end
     start_pos = rank_end - window_size
     while start_pos >= rank_start:
         start_pos = max(start_pos, rank_start)
-        item = permutation_pipeline(item, start_pos, end_pos, model_name=model_name, openai_key=openai_key)
+        item = permutation_pipeline(item, start_pos, end_pos, model_name=model_name, openai_key=api_key)
         end_pos = end_pos - step
         start_pos = start_pos - step
     return item
