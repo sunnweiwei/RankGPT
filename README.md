@@ -56,7 +56,7 @@ We get the following result:
   # (1) Create permutation generation instruction
   messages = create_permutation_instruction(item=item, rank_start=0, rank_end=3, model_name='gpt-3.5-turbo')
   # (2) Get ChatGPT predicted permutation
-  permutation = run_llm(messages, openai_key="Your OPENAI Key!", model_name=model_name='gpt-3.5-turbo')
+  permutation = run_llm(messages, api_key="Your OPENAI Key!", model_name=model_name='gpt-3.5-turbo')
   # (3) Use permutation to re-rank the passage
   item = receive_permutation(item, permutation, rank_start=0, rank_end=3)
   
@@ -74,7 +74,8 @@ Below is an example by re-ranking 3 passages with window size of 2 and step size
 
 ```python
 from rank_gpt import sliding_windows
-new_item = sliding_windows(item, rank_start=0, rank_end=3, window_size=2, step=1, model_name='gpt-3.5-turbo', openai_key='Your OPENAI Key!')
+api_key = "Your OPENAI Key"
+new_item = sliding_windows(item, rank_start=0, rank_end=3, window_size=2, step=1, model_name='gpt-3.5-turbo', api_key=api_key)
 print(new_item)
 ```
 
@@ -98,7 +99,7 @@ rank_results = run_retriever(topics, searcher, qrels, k=100)
 # Run sliding window permutation generation
 new_results = []
 for item in tqdm(rank_results):
-    new_item = sliding_windows(item, rank_start=0, rank_end=100, window_size=20, step=10, model_name='gpt-3.5-turbo', openai_key=openai_key)
+    new_item = sliding_windows(item, rank_start=0, rank_end=100, window_size=20, step=10, model_name='gpt-3.5-turbo', api_key=openai_key)
     new_results.append(new_item)
 
 # Evaluate nDCG@10
