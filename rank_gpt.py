@@ -10,7 +10,7 @@ except:
     completion = openai.ChatCompletion.create
 
 class SafeOpenai:
-    def __init__(self, model=None, keys=None, start_id=None, proxy=None):
+    def __init__(self, keys=None, start_id=None, proxy=None):
         if isinstance(keys, str):
             keys = [keys]
         if keys is None:
@@ -180,8 +180,8 @@ def create_permutation_instruction(item=None, rank_start=0, rank_end=100, model_
     return messages
 
 
-def run_llm(messages, openai_key=None, model_name="gpt-3.5-turbo"):
-    agent = SafeOpenai(openai_key)
+def run_llm(messages, api_key=None, model_name="gpt-3.5-turbo"):
+    agent = SafeOpenai(api_key)
     response = agent.chat(model=model_name, messages=messages, temperature=0, return_text=True)
     return response
 
@@ -222,22 +222,22 @@ def receive_permutation(item, permutation, rank_start=0, rank_end=100):
     return item
 
 
-def permutation_pipeline(item=None, rank_start=0, rank_end=100, model_name='gpt-3.5-turbo', api_key=None): # change to `api_key` from `openai_key` to make it more generic
+def permutation_pipeline(item=None, rank_start=0, rank_end=100, model_name='gpt-3.5-turbo', api_key=None):
     messages = create_permutation_instruction(item=item, rank_start=rank_start, rank_end=rank_end,
                                               model_name=model_name) # chan
-    permutation = run_llm(messages, openai_key=api_key, model_name=model_name)
+    permutation = run_llm(messages, api_key=api_key, model_name=model_name)
     item = receive_permutation(item, permutation, rank_start=rank_start, rank_end=rank_end)
     return item
 
 
 def sliding_windows(item=None, rank_start=0, rank_end=100, window_size=20, step=10, model_name='gpt-3.5-turbo',
-                    api_key=None): # change to `api_key` from `openai_key` to make it more generic
+                    api_key=None):
     item = copy.deepcopy(item)
     end_pos = rank_end
     start_pos = rank_end - window_size
     while start_pos >= rank_start:
         start_pos = max(start_pos, rank_start)
-        item = permutation_pipeline(item, start_pos, end_pos, model_name=model_name, openai_key=api_key)
+        item = permutation_pipeline(item, start_pos, end_pos, model_name=model_name, api_key=api_key)
         end_pos = end_pos - step
         start_pos = start_pos - step
     return item
@@ -259,7 +259,7 @@ def main():
     from pyserini.search import get_topics, get_qrels
     import tempfile
 
-    openai_key = None  # Your openai key
+    api_key = None  # Your openai key
 
     searcher = LuceneSearcher.from_prebuilt_index('msmarco-v1-passage')
     topics = get_topics('dl19-passage')
@@ -270,7 +270,7 @@ def main():
     new_results = []
     for item in tqdm(rank_results):
         new_item = permutation_pipeline(item, rank_start=0, rank_end=20, model_name='gpt-3.5-turbo',
-                                        openai_key=openai_key)
+                                        api_key=api_key)
         new_results.append(new_item)
 
     temp_file = tempfile.NamedTemporaryFile(delete=False).name
