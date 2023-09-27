@@ -56,7 +56,7 @@ We get the following result:
   # (1) Create permutation generation instruction
   messages = create_permutation_instruction(item=item, rank_start=0, rank_end=3, model_name='gpt-3.5-turbo')
   # (2) Get ChatGPT predicted permutation
-  permutation = run_llm(messages, api_key="Your OPENAI Key!", model_name=model_name='gpt-3.5-turbo')
+  permutation = run_llm(messages, api_key="Your OPENAI Key!", model_name='gpt-3.5-turbo')
   # (3) Use permutation to re-rank the passage
   item = receive_permutation(item, permutation, rank_start=0, rank_end=3)
   
