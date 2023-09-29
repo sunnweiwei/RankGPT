@@ -88,7 +88,7 @@ Example of evaluation on TREC-DL19:
 from pyserini.search import LuceneSearcher, get_topics, get_qrels
 from rank_gpt import run_retriever, sliding_windows
 import tempfile
-api_key = None  # Your openai key
+openai_key = None  # Your openai key
 
 # Retrieve passages using pyserini BM25.
 searcher = LuceneSearcher.from_prebuilt_index('msmarco-v1-passage')
