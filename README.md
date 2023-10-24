@@ -6,7 +6,7 @@ This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relev
 
 
 ## News
-- **[2023.10.08]** Our paper has been accepted to the EMNLP 2023 main conference, and the updated version will be released soon!
+- **[2023.10.08]** Our paper has been accepted for presentation at the EMNLP 2023 main conference. See the updated version [here](https://drive.google.com/file/d/1tpT7eo1hcHl6OCt4_pcFlh1-SZ5Yq1_X/view?usp=sharing)!
 - **[2023.08.05]** Now support Azure, Claude, Cohere, Llama2 via [LiteLLM](https://github.com/BerriAI/litellm)!
 - **[2023.07.11]** Release a new test set NovelEval with the novel search questions and passages that have not been contaminated by the latest LLMs (e.g., GPT-4). See [NovelEval](https://github.com/sunnweiwei/RankGPT/tree/main/NovelEval) for details.
 - **[2023.04.23]** Sharing 100K ChatGPT predicted permutations on MS MARCO training set [here](#download-data-and-model).
