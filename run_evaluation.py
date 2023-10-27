@@ -86,7 +86,7 @@ for data in ['dl19', 'dl20', 'covid', 'nfc', 'touche', 'dbpedia', 'scifact', 'si
     # Run sliding window permutation generation
     new_results = []
     for item in tqdm(rank_results):
-        new_item = sliding_windows(item, rank_start=0, rank_end=10, window_size=20, step=10,
+        new_item = sliding_windows(item, rank_start=0, rank_end=100, window_size=20, step=10,
                                    model_name='gpt-3.5-turbo', api_key=openai_key)
         new_results.append(new_item)
 
