@@ -1,17 +1,12 @@
 # Instruction Distillation
 
-Code for paper [Instruction Distillation Makes LLMs Efficient Pointwise Rankers]()
+Code for paper [Instruction Distillation Makes LLMs Efficient Pointwise Rankers](https://github.com/sunnweiwei/RankGPT/edit/main/InstructDistill/Instruction-Distillation.pdf).
 
-This project aims to improve the efficiency of LLMs as rankers via instruction distillation.
+*Instruction Distillation* is an unsupervised approach to specialize LLMs on ranking tasks by distilling instructions.
+
+This work is presented at *The 1st Workshop on "Recommendation with Generative Models"* at CIKM 2023.
 
 ## Pre-trained Models
-
-| Model | Link |
-| ---- | ---- |
-| Rank-Flan-T5-XL | |
-| Rank-Flan-T5-Large | |
-| Rank-Flan-T5-Base | |
-| Rank-LLaMA-2-7B | |
 
 The following code show how to predict the relevance of a paired (query, passage).
 
@@ -73,9 +68,18 @@ python instruction_distill.py \
 ```
 Converting deepspeed checkpoint.
 ```
-python
+python zero_to_fp32.py . pytorch_model.bin
 ```
-### 
+
+## Cite
+```
+@inproceedings{Sun2023InstructionDM,
+  title={Instruction Distillation Makes Large Language Models Efficient Zero-shot Rankers},
+  author={Weiwei Sun and Zheng Chen and Xinyu Ma and Lingyong Yan and Shuaiqiang Wang and Pengjie Ren and Zhumin Chen and Dawei Yin and Zhaochun Ren},
+  booktitle={GenRec workshop at CIKM},
+  year={2023},
+}
+```
 
 
 
