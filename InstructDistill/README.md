@@ -1,6 +1,6 @@
 # Instruction Distillation
 
-Code for paper [Instruction Distillation Makes LLMs Efficient Pointwise Rankers](https://github.com/sunnweiwei/RankGPT/edit/main/InstructDistill/Instruction-Distillation.pdf).
+Code for paper [Instruction Distillation Makes LLMs Efficient Pointwise Rankers](https://arxiv.org/abs/2311.01555).
 
 *Instruction Distillation* is an unsupervised approach to specialize LLMs on ranking tasks by distilling instructions.
 
