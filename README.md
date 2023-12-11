@@ -6,6 +6,7 @@ This project aims to explore generative LLMs such as ChatGPT and GPT-4 for relev
 
 
 ## News
+- **[2023.12.10]** Our [RankGPT](https://arxiv.org/abs/2304.09542) paper won the Outstanding Paper Award of EMNLP2023! 🎉🎉🎉
 - **[2023.11.06]** Introduce [Instruction Distillation](https://github.com/sunnweiwei/RankGPT/tree/main/InstructDistill): Simplifing complex ranking instructions to enhance the efficiency of LLMs. Achieve SOTA ranking performances with only open-source LLMs!
 - **[2023.10.08]** Our paper has been accepted for presentation at the EMNLP 2023 main conference. See the updated version at https://arxiv.org/pdf/2304.09542.pdf!
 - **[2023.08.05]** Now support Azure, Claude, Cohere, Llama2 via [LiteLLM](https://github.com/BerriAI/litellm)!
