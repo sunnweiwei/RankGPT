@@ -122,9 +122,6 @@ Below are the results (average nDCG@10) of our preliminary experiments on [TREC]
 
 ![Results on benchmarks](assets/benchmark-results.png)
 
-## Installation
-
-(1) Install [pyserini](https://github.com/castorini/pyserini/blob/master/docs/installation.md). (2) Install other dependencies `pip install -r requirements.txt`. (3) Add your OpenAI API key as envionment variable `export OPENAI_KEY=YOUR_OPENAI_KEY`
 
 ## Training Specialized Models
 
