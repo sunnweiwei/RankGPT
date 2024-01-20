@@ -75,6 +75,7 @@ class ClaudeClient:
 
 
 class LitellmClient:
+    #  https://github.com/BerriAI/litellm
     def __init__(self, keys=None):
         self.api_key = keys
 
@@ -85,8 +86,9 @@ class LitellmClient:
             response = response.choices[0].message.content
         return response
 
+
 def convert_messages_to_prompt(messages):
-    #  used for completion model (not chat model)
+    #  convert chat message into a single prompt; used for completion model (eg davinci)
     prompt = ''
     for turn in messages:
         if turn['role'] == 'system':
