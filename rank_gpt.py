@@ -2,12 +2,17 @@ import copy
 from tqdm import tqdm
 import time
 import openai
+from openai import OpenAI
 import json
 import tiktoken
+
 try:
+    import litellm
     from litellm import completion
 except:
+    litellm = None
     completion = openai.ChatCompletion.create
+
 
 class SafeOpenai:
     def __init__(self, keys=None, start_id=None, proxy=None):
@@ -19,16 +24,15 @@ class SafeOpenai:
         self.key = keys
         self.key_id = start_id or 0
         self.key_id = self.key_id % len(self.key)
-        openai.proxy = proxy
-        openai.api_key = self.key[self.key_id % len(self.key)]
         self.api_key = self.key[self.key_id % len(self.key)]
+        self.client = OpenAI(api_key=self.api_key)
 
     def chat(self, *args, return_text=False, reduce_length=False, **kwargs):
         while True:
             try:
                 model = args[0] if len(args) > 0 else kwargs["model"]
                 if "gpt" in model:
-                    completion = openai.ChatCompletion.create(*args, **kwargs, timeout=30)
+                    completion = self.client.chat.completions.create(*args, **kwargs, timeout=30)
                 elif model in litellm.model_list:
                     completion = completion(*args, **kwargs, api_key=self.api_key, force_timeout=30)
                 break
@@ -38,16 +42,18 @@ class SafeOpenai:
                     print('reduce_length')
                     return 'ERROR::reduce_length'
                 self.key_id = (self.key_id + 1) % len(self.key)
-                openai.api_key = self.key[self.key_id]
+                self.client = OpenAI(api_key=self.api_key)
                 time.sleep(0.1)
         if return_text:
-            completion = completion['choices'][0]['message']['content']
+            completion = completion.choices[0].message.content
         return completion
 
     def text(self, *args, return_text=False, reduce_length=False, **kwargs):
         while True:
             try:
-                completion = openai.Completion.create(*args, **kwargs)
+                completion = self.client.completions.create(
+                    *args, **kwargs
+                )
                 break
             except Exception as e:
                 print(e)
@@ -55,12 +61,11 @@ class SafeOpenai:
                     print('reduce_length')
                     return 'ERROR::reduce_length'
                 self.key_id = (self.key_id + 1) % len(self.key)
-                openai.api_key = self.key[self.key_id]
+                self.client = OpenAI(api_key=self.api_key)
                 time.sleep(0.1)
         if return_text:
-            completion = completion['choices'][0]['text']
+            completion = completion.choices[0].text
         return completion
-
 
 def num_tokens_from_messages(messages, model="gpt-3.5-turbo-0301"):
     """Returns the number of tokens used by a list of messages."""
