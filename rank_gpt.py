@@ -177,8 +177,8 @@ def create_permutation_instruction(item=None, rank_start=0, rank_end=100, model_
 def run_llm(messages, api_key=None, model_name="gpt-3.5-turbo"):
     if 'gpt' in model_name:
         Client = OpenaiClient
-    # elif 'claude' in model_name:
-        # Client = ClaudeClient
+    elif 'claude' in model_name:
+        Client = ClaudeClient
     else:
         Client = LitellmClient
 
