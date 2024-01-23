@@ -31,11 +31,6 @@ ZERO_SHOT_EXAMPLE = '''Given a passage and a question, predict whether the passa
 
 
 def relevance_generation(query, passage, instruction: str = ZERO_SHOT_EXAMPLE, model='gpt-3.5-turbo'):
-    if 'few-shot' in instruction:
-        instruction = FEW_SHOT_EXAMPLE
-    else:
-        instruction = ZERO_SHOT_EXAMPLE
-
     prompt = f"{instruction}\nPassage: {passage}\nQuery: {query}\nDoes the passage answer the query?\nAnswer:"
     if 'instruct' in model or 'text' in model or 'davinci' in model:
         response = client.completions.create(
