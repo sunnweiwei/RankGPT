@@ -247,5 +247,5 @@ if __name__ == '__main__':
     model, tokenizer = None, None
     if args.do_train:
         model, tokenizer = train(args)
-    if args.de_eval:
+    if args.do_eval:
         eval_on_benchmark(args, model, tokenizer)
