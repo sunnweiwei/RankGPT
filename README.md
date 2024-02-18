@@ -185,3 +185,12 @@ The following figure show the results of distilled specialized model with differ
   volume={abs/2304.09542}
 }
 ```
+```
+@article{Sun2023InstructionDM,
+  title={Instruction Distillation Makes Large Language Models Efficient Zero-shot Rankers},
+  author={Weiwei Sun and Zheng Chen and Xinyu Ma and Lingyong Yan and Shuaiqiang Wang and Pengjie Ren and Zhumin Chen and Dawei Yin and Zhaochun Ren},
+  journal={ArXiv},
+  year={2023},
+  volume={abs/2311.01555},
+}
+```
