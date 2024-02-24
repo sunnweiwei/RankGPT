@@ -94,11 +94,9 @@ for data in ['dl19', 'dl20', 'covid', 'nfc', 'touche', 'dbpedia', 'scifact', 'si
     from trec_eval import EvalFunction
 
     # Create an empty text file to write results, and pass the name to eval
-    output_file = tempfile.NamedTemporaryFile(delete=False).name
-    write_eval_file(new_results, output_file)
-    EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', THE_TOPICS[data], output_file])
-    # Rename the output file to a better name
-    shutil.move(output_file, f'eval_{data}.txt')
+    temp_file = tempfile.NamedTemporaryFile(delete=False).name
+    EvalFunction.write_file(reranked_data, temp_file)
+    EvalFunction.main(THE_TOPICS[data], temp_file)
 
 
 for data in ['mrtydi-ar', 'mrtydi-bn', 'mrtydi-fi', 'mrtydi-id', 'mrtydi-ja', 'mrtydi-ko', 'mrtydi-ru', 'mrtydi-sw', 'mrtydi-te', 'mrtydi-th']:
@@ -129,7 +127,5 @@ for data in ['mrtydi-ar', 'mrtydi-bn', 'mrtydi-fi', 'mrtydi-id', 'mrtydi-ja', 'm
     from trec_eval import EvalFunction
 
     temp_file = tempfile.NamedTemporaryFile(delete=False).name
-    write_eval_file(new_results, temp_file)
-    EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', THE_TOPICS[data], temp_file])
-        # Rename the output file to a better name
-    shutil.move(output_file, f'eval_{data}.txt')
+    EvalFunction.write_file(reranked_data, temp_file)
+    EvalFunction.main(THE_TOPICS[data], temp_file)
