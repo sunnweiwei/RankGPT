@@ -95,7 +95,7 @@ for data in ['dl19', 'dl20', 'covid', 'nfc', 'touche', 'dbpedia', 'scifact', 'si
 
     # Create an empty text file to write results, and pass the name to eval
     temp_file = tempfile.NamedTemporaryFile(delete=False).name
-    EvalFunction.write_file(reranked_data, temp_file)
+    EvalFunction.write_file(new_results, temp_file)
     EvalFunction.main(THE_TOPICS[data], temp_file)
 
 
@@ -127,5 +127,5 @@ for data in ['mrtydi-ar', 'mrtydi-bn', 'mrtydi-fi', 'mrtydi-id', 'mrtydi-ja', 'm
     from trec_eval import EvalFunction
 
     temp_file = tempfile.NamedTemporaryFile(delete=False).name
-    EvalFunction.write_file(reranked_data, temp_file)
+    EvalFunction.write_file(new_results, temp_file)
     EvalFunction.main(THE_TOPICS[data], temp_file)
