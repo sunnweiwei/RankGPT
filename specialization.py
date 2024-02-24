@@ -238,8 +238,8 @@ def eval_on_benchmark(args, model=None, tokenizer=None):
             reranked_data.append(receive_permutation(item, response, rank_start=0, rank_end=100))
 
         temp_file = tempfile.NamedTemporaryFile(delete=False).name
-        write_eval_file(reranked_data, temp_file)
-        EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', THE_TOPICS[data], temp_file])
+        EvalFunction.write_file(reranked_data, temp_file)
+        EvalFunction.main(THE_TOPICS[data], temp_file)
 
 
 if __name__ == '__main__':
