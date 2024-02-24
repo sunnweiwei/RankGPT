@@ -108,8 +108,8 @@ for item in tqdm(rank_results):
 # Evaluate nDCG@10
 from trec_eval import EvalFunction
 temp_file = tempfile.NamedTemporaryFile(delete=False).name
-write_eval_file(new_results, temp_file)
-EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', 'dl19-passage', temp_file])
+EvalFunction.write_file(new_results, temp_file)
+EvalFunction.main('dl19-passage', temp_file)
 ```
 
 Run evaluation on all benchmarks
