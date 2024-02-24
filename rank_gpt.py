@@ -277,7 +277,7 @@ def main():
     temp_file = tempfile.NamedTemporaryFile(delete=False).name
     from trec_eval import EvalFunction
 
-    EvalFunction.write_file(reranked_data, temp_file)
+    EvalFunction.write_file(new_results, temp_file)
     EvalFunction.main(THE_TOPICS[data], temp_file)
 
 
