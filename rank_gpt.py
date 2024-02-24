@@ -275,10 +275,10 @@ def main():
         new_results.append(new_item)
 
     temp_file = tempfile.NamedTemporaryFile(delete=False).name
-    write_eval_file(new_results, temp_file)
     from trec_eval import EvalFunction
 
-    EvalFunction.eval(['-c', '-m', 'ndcg_cut.10', 'dl19-passage', temp_file])
+    EvalFunction.write_file(reranked_data, temp_file)
+    EvalFunction.main(THE_TOPICS[data], temp_file)
 
 
 if __name__ == '__main__':
