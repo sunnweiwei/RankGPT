@@ -61,9 +61,12 @@ def get_qrels_file(name):
         'robust04': 'beir-v1.0.0-robust04-test',
         'signal': 'beir-v1.0.0-signal1m-test',
     }
-    name = THE_TOPICS[name]
+    name = THE_TOPICS.get(name, '')
     name = name.replace('-test', '.test')
-    name = 'data/label_file/qrels.' + name + '.txt'
+    name = 'data/label_file/qrels.' + name + '.txt'  # try to use cache
+    if not os.path.exists():
+        from pyserini.search import get_qrels_file
+        return get_qrels_file(name)  # download from pyserini
     return name
 
 
