@@ -52,6 +52,34 @@ class OpenaiClient:
         return completion
 
 
+class GroqClient:
+    def __init__(self, keys=None):
+        from groq import Groq
+        if isinstance(keys, str):
+            keys = [keys]
+        if keys is None:
+            raise ValueError("Please provide Groq API Key.")
+        
+        self.key = keys
+        self.api_key = keys[0]  # Use first key
+        self.client = Groq(api_key=self.api_key)
+
+    def chat(self, *args, return_text=False, reduce_length=False, **kwargs):
+        while True:
+            try:
+                completion = self.client.chat.completions.create(*args, **kwargs, timeout=30)
+                break
+            except Exception as e:
+                print(str(e))
+                if "maximum context length" in str(e).lower():
+                    print('reduce_length')
+                    return 'ERROR::reduce_length'
+                time.sleep(0.1)
+        if return_text:
+            completion = completion.choices[0].message.content
+        return completion
+
+
 class ClaudeClient:
     def __init__(self, keys):
         from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
